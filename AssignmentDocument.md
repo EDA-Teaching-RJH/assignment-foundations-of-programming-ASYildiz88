@@ -278,3 +278,5 @@ Using the Snipping Tool (for Any Screen Area)
         
     
     -   Click the record button to start, and again to stop.
+
+# Part C – Development Report
