@@ -280,3 +280,127 @@ Using the Snipping Tool (for Any Screen Area)
     -   Click the record button to start, and again to stop.
 
 # Part C – Development Report
+## 1. Legacy Code Post-Mortem
+
+### Bug 1 – Incorrect Comparison Operator
+
+The original code used:
+
+`if opt = "1":`
+
+This caused a SyntaxError because `=` is used for assignment, not comparison. In conditional statements, `==` must be used to compare values. This was corrected to:
+
+`if opt == "1":`
+
+### Bug 2 – Function Not Being Called
+
+The function `run_system_monolith` was defined but not executed correctly. Writing the function name without parentheses does not run the function. For example:
+
+`run_system_monolith`
+
+This does nothing. The function must be called using parentheses:
+
+`run_system_monolith()`
+
+Without this, the program does not start properly.
+
+### Bug 3 – Infinite Loop in Loading Section
+
+The original code contained a loop:
+
+`while loading < 5:`
+
+Inside the loop, the value of `loading` was never incremented. This caused an infinite loop because the condition always remained true. The fix was to add:
+
+`loading += 1`
+
+This allowed the loop to progress and eventually stop.
+
+### Bug 4 – List Index Out of Range
+
+The code used:
+
+`for i in range(10):`
+
+However, the lists only contained four elements. This caused an `IndexError` because the loop attempted to access indices that did not exist. The issue was fixed by replacing it with:
+
+`for i in range(len(n)):`
+
+This ensures the loop only iterates through valid indices.
+
+### Bug 5 – String and Integer Concatenation Error
+
+The original code attempted to print:
+
+`print("High ranking officers: " + count)`
+
+This caused a `TypeError` because `count` is an integer and cannot be directly concatenated with a string. The fix was to convert the integer to a string:
+
+`print("High ranking officers: " + str(count))`
+
+This ensures both values are strings before concatenation.
+
+### Bug 6 – Incorrect Logical Condition
+
+The original condition was written as:
+
+`if rank == "Captain" or "Commander":`
+
+This always evaluates as True because the string `"Commander"` is a non-empty value, which is considered True in Python. As a result, the condition did not work correctly.
+
+The fix was to explicitly compare both conditions:
+
+`if rank == "Captain" or rank == "Commander":`
+
+This ensures the comparison is evaluated properly.
+
+### Bug 7 – Removing a Non-Existent Element
+
+The original code used:
+
+`idx = n.index(rem)`
+
+If the name was not in the list, this caused a `ValueError` because `.index()` cannot find a value that does not exist.
+
+The fix was to first check whether the name exists:
+
+`if rem in n:`
+
+This prevents the program from crashing and ensures safe removal.
+
+### Bug 8 – Parallel Lists Becoming Misaligned
+
+In the original version, when adding a new crew member, only the name was appended to the list:
+
+`n.append(new_name)`
+
+However, the corresponding rank and division were not added to their lists. This caused the parallel lists to become misaligned, meaning the indices no longer matched correctly.
+
+To fix this, I made sure to append the new data to all related lists at the same time. This keeps the parallel structure consistent and prevents incorrect data mapping.
+
+### Bug 9 – Whitespace Causing Input Mismatch
+
+While testing the remove feature, I noticed that entering extra spaces before or after a name caused the system to not find the member, even though the name existed.
+
+This happened because user input included hidden whitespace characters.
+
+To solve this, I used `.strip()` when reading input. This removes unnecessary spaces and ensures the comparison works correctly.
+
+### Bug 10 – Lack of Input Validation
+
+The original system did not validate user input properly. This meant that invalid ranks or unexpected values could be entered without any checks.
+
+This could lead to inconsistent data and logical errors later in the program.
+
+In my fix, I added validation checks for ranks and divisions to ensure only allowed values are accepted. If the input is invalid, the system now prints an error message and prevents incorrect data from being added.
+
+## 2. Parallel List Strategy
+
+Parallel lists store related data in separate lists, but they rely on index alignment. This means the data at index 0 in the `names` list must match index 0 in the `ranks`, `divisions`, and `ids` lists.
+
+If one list is modified without updating the others, the system becomes inconsistent. For example, if a name is removed but the corresponding ID is not removed, the data will no longer match correctly.
+
+In my implementation, I prevented this by always finding the correct index first and then removing or updating all lists using the same index. This keeps the structure synchronized.
+
+Although parallel lists work for small systems, using classes or dictionaries would be safer in larger applications.
+
