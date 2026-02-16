@@ -146,6 +146,14 @@ def calculate_payroll(ranks):
 
     print("Total payroll cost:", total)
 
+def count_officers(ranks):
+    count = 0
+    for rank in ranks:
+        if rank == "Captain" or rank == "Commander":
+            count += 1
+
+    print("Captain/Commander count:", count)
+
 def main():
     names, ranks, divisions, ids = init_database()
 
@@ -166,6 +174,8 @@ def main():
             filter_by_division(names, divisions)
         elif choice == "7":
             calculate_payroll(ranks)
+        elif choice == "8":
+            count_officers(ranks)
         elif choice == "9":
             print("Exiting system.")
             break
