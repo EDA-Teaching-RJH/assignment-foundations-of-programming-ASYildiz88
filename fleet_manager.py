@@ -9,8 +9,9 @@ def init_database():
 
     return names, ranks, divisions, ids
 
-def display_menu():
+def display_menu(current_user):
     print("\n--- FLEET MANAGER ---")
+    print("Logged in as:", current_user)
     print("1. Display Roster")
     print("2. Add Member")
     print("3. Remove Member")
@@ -156,9 +157,10 @@ def count_officers(ranks):
 
 def main():
     names, ranks, divisions, ids = init_database()
+    current_user = input("Enter your full name: ").strip()
 
     while True:
-        choice = display_menu()
+        choice = display_menu(current_user)
 
         if choice == "1":
             display_roster(names, ranks, divisions, ids)
