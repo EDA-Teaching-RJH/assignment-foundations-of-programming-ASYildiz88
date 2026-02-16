@@ -74,6 +74,26 @@ def remove_member(names, ranks, divisions, ids):
 
     print("Crew member removed.")
 
+def update_rank(names, ranks, ids):
+    target_id = input("Enter ID to update: ").strip()
+
+    if target_id not in ids:
+        print("ID not found.")
+        return
+
+    index = ids.index(target_id)
+    print("Current:", names[index], "-", ranks[index])
+
+    new_rank = input("Enter new rank: ").strip()
+
+    valid_ranks = ["Captain", "Commander", "Lt. Commander", "Lieutenant", "Ensign"]
+    if new_rank not in valid_ranks:
+        print("Invalid rank.")
+        return
+
+    ranks[index] = new_rank
+    print("Rank updated.")
+
 def main():
     names, ranks, divisions, ids = init_database()
 
@@ -87,7 +107,7 @@ def main():
         elif choice == "3":
             remove_member(names, ranks, divisions, ids)  
         elif choice == "4":
-            print("Update feature not added yet.")
+            update_rank(names, ranks, ids)      
         elif choice == "5":
             print("Exiting system.")
             break
