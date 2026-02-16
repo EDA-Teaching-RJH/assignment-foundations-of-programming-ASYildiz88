@@ -127,6 +127,25 @@ def filter_by_division(names, divisions):
     if not found:
         print("No crew in that division.")
 
+def calculate_payroll(ranks):
+    total = 0
+
+    for rank in ranks:
+        if rank == "Captain":
+            total += 1000
+        elif rank == "Commander":
+            total += 800
+        elif rank == "Lt. Commander":
+            total += 600
+        elif rank == "Lieutenant":
+            total += 400
+        elif rank == "Ensign":
+            total += 200
+        else:
+            total += 300  # default for unknown ranks
+
+    print("Total payroll cost:", total)
+
 def main():
     names, ranks, divisions, ids = init_database()
 
@@ -145,6 +164,8 @@ def main():
             search_crew(names, ranks, divisions, ids)
         elif choice == "6":
             filter_by_division(names, divisions)
+        elif choice == "7":
+            calculate_payroll(ranks)
         elif choice == "9":
             print("Exiting system.")
             break
