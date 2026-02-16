@@ -15,8 +15,13 @@ def display_menu():
     print("2. Add Member")
     print("3. Remove Member")
     print("4. Update Rank")
-    print("5. Exit")
-    return input("Select option: ").strip()
+    print("5. Search Crew")
+    print("6. Filter by Division")
+    print("7. Calculate Payroll")
+    print("8. Count Officers")
+    print("9. Exit")
+    choice = input("Select option: ").strip()
+    return choice
 
 def add_member(names, ranks, divisions, ids):
     new_id = input("Enter ID: ").strip()
@@ -94,6 +99,34 @@ def update_rank(names, ranks, ids):
     ranks[index] = new_rank
     print("Rank updated.")
 
+def search_crew(names, ranks, divisions, ids):
+    term = input("Search name: ").strip().lower()
+    found = False
+
+    for i in range(len(names)):
+        if term in names[i].lower():
+            print(ids[i], "-", names[i], "-", ranks[i], "-", divisions[i])
+            found = True
+
+    if not found:
+        print("No matches.")
+
+def filter_by_division(names, divisions):
+    div = input("Division (Command/Operations/Security/Sciences): ").strip()
+
+    if div not in ["Command", "Operations", "Security", "Sciences"]:
+        print("Invalid division.")
+        return
+
+    found = False
+    for i in range(len(names)):
+        if divisions[i] == div:
+            print(names[i], "-", divisions[i])
+            found = True
+
+    if not found:
+        print("No crew in that division.")
+
 def main():
     names, ranks, divisions, ids = init_database()
 
@@ -109,8 +142,13 @@ def main():
         elif choice == "4":
             update_rank(names, ranks, ids)      
         elif choice == "5":
+            search_crew(names, ranks, divisions, ids)
+        elif choice == "6":
+            filter_by_division(names, divisions)
+        elif choice == "9":
             print("Exiting system.")
             break
+       
         else:
             print("Invalid choice.")
 
