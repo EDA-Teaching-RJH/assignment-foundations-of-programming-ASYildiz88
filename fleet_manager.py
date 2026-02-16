@@ -49,6 +49,13 @@ def add_member(names, ranks, divisions, ids):
     ids.append(new_id)
 
     print("Crew member added.")
+def display_roster(names, ranks, divisions, ids):
+    print("\n=== CREW ROSTER ===")
+    print(f"{'ID':<6} {'NAME':<15} {'RANK':<13} {'DIVISION':<10}")
+    print("-" * 50)
+
+    for i in range(len(names)):
+        print(f"{ids[i]:<6} {names[i]:<15} {ranks[i]:<13} {divisions[i]:<10}")
 
 def main():
     names, ranks, divisions, ids = init_database()
@@ -57,7 +64,7 @@ def main():
         choice = display_menu()
 
         if choice == "1":
-            print("Roster feature not added yet.")
+            display_roster(names, ranks, divisions, ids)
         elif choice == "2":
             add_member(names, ranks, divisions, ids)
         elif choice == "3":
