@@ -49,6 +49,7 @@ def add_member(names, ranks, divisions, ids):
     ids.append(new_id)
 
     print("Crew member added.")
+
 def display_roster(names, ranks, divisions, ids):
     print("\n=== CREW ROSTER ===")
     print(f"{'ID':<6} {'NAME':<15} {'RANK':<13} {'DIVISION':<10}")
@@ -56,6 +57,22 @@ def display_roster(names, ranks, divisions, ids):
 
     for i in range(len(names)):
         print(f"{ids[i]:<6} {names[i]:<15} {ranks[i]:<13} {divisions[i]:<10}")
+
+def remove_member(names, ranks, divisions, ids):
+    target_id = input("Enter ID to remove: ").strip()
+
+    if target_id not in ids:
+        print("ID not found.")
+        return
+
+    index = ids.index(target_id)
+
+    names.pop(index)
+    ranks.pop(index)
+    divisions.pop(index)
+    ids.pop(index)
+
+    print("Crew member removed.")
 
 def main():
     names, ranks, divisions, ids = init_database()
@@ -68,7 +85,7 @@ def main():
         elif choice == "2":
             add_member(names, ranks, divisions, ids)
         elif choice == "3":
-            print("Remove feature not added yet.")
+            remove_member(names, ranks, divisions, ids)  
         elif choice == "4":
             print("Update feature not added yet.")
         elif choice == "5":
